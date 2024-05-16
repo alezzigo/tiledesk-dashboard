@@ -279,8 +279,6 @@ export class HistoryAndNortConvsComponent extends WsSharedComponent implements O
   appSumoProfile: string;
   appSumoProfilefeatureAvailableFromBPlan: string;
   botLogo: string;
-
-  selected: any;
   /**
    * 
    * @param router 
@@ -323,7 +321,7 @@ export class HistoryAndNortConvsComponent extends WsSharedComponent implements O
     public brandService: BrandService,
   ) {
     super(botLocalDbService, usersLocalDbService, router, wsRequestsService, faqKbService, usersService, notify, logger, translate);
-    this.selected = 'history';//-> default active component
+  
     const brand = brandService.getBrand();
     this.botLogo = brand['BASE_LOGO_NO_TEXT']
   }
@@ -2876,12 +2874,6 @@ export class HistoryAndNortConvsComponent extends WsSharedComponent implements O
 
       }
     })
-  }
-
-  //go to different component passed throw arg of method
-  goTo(selected) {
-    this.selected = selected;
-    this.logger.log("[ANALYTICS] Move to:", selected);
   }
 
 }

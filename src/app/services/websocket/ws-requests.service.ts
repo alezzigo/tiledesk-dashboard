@@ -1326,6 +1326,122 @@ export class WsRequestsService implements OnDestroy {
   }
 
 
+  // -------------------------------------------------------------
+  // WS Requests NO-RT & HISTORY
+  // -------------------------------------------------------------
+  public getUserInputResults(operator: string, status: string, querystring: string, pagenumber: number) {
+    this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - REQUESTS SERVICE Get REQUESTS - operator  ', operator);
+    this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - REQUESTS SERVICE Get REQUEST - status  ', status);
+    //  console.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - REQUESTS SERVICE Get REQUEST - querystring  ', querystring);
+    this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - REQUESTS SERVICE Get REQUEST - pagenumber  ', pagenumber);
+
+    let _querystring = ''
+    if (querystring && querystring !== undefined) {
+      if (status === '100' || status === '200' || status === '1000') {
+        _querystring = '&' + querystring
+      } else if (status === 'all') {
+        _querystring = querystring + '&'
+      }
+    } else {
+      _querystring = ''
+    }
+
+    let url = this.SERVER_BASE_PATH + this.project_id + '/user-input-results?' + _querystring + 'page=' + pagenumber + '&no_populate=true&no_textscore=true';
+    if (status !== 'all') {
+      url += '&status' + operator + status + _querystring;
+    }
+
+
+    this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - GET REQUESTS URL ', url);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.TOKEN,
+      })
+    };
+
+    return this._httpClient
+      .get(url, httpOptions)
+      .pipe(
+        map(
+          (response) => {
+            const data = response;
+            // Does something on data.data
+            this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - REQUESTS SERVICE * DATA * ', data);
+
+            if (data['requests']) {
+              data['requests'].forEach(request => {
+
+                // ----------------------------------
+                // @ Department
+                // ----------------------------------
+                if (request.snapshot && request.snapshot.department) {
+                  this.logger.log("[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] snapshot department", request.snapshot.department);
+                  request.department = request['snapshot']["department"]
+
+
+                }
+                else if (request['attributes']) {
+                  if (request['attributes']['departmentId'] && request['attributes']['departmentName'])
+                    request.department = { 'name': request['attributes']['departmentName'], 'id': request['attributes']['departmentId'] }
+                }
+
+                else if (request.department) {
+                  request.department = request.department
+                }
+
+                // ----------------------------------
+                // @ Lead
+                // ----------------------------------
+                if (request.snapshot && request.snapshot.lead) {
+                  this.logger.log("[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] snapshot lead ", request.snapshot.lead);
+                  request.lead = request['snapshot']["lead"]
+                }
+                else {
+
+                  if (request['attributes']) {
+                    if (request['attributes']['userFullname'] && request['attributes']['userEmail'] && request['attributes']['requester_id']) {
+                      request.lead = { 'fullname': request['attributes']['userFullname'], 'email': request['attributes']['userEmail'], 'lead_id': request['attributes']['requester_id'] }
+                    }
+                    else if (request.lead) {
+                      request.lead = request.lead
+                    }
+                  } else if (request.lead) {
+                    request.lead = request.lead;
+                  }
+                }
+
+                // ----------------------------------
+                // @ Requester
+                // ----------------------------------
+                if (request.snapshot && request.snapshot.requester) {
+                  this.logger.log("[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] snapshot requester ", request.snapshot.requester);
+                  request.requester = request['snapshot']["requester"]
+
+                } else if (request.requester) {
+                  request.requester = request.requester
+                }
+
+                // ----------------------------------
+                // @ Agents
+                // ----------------------------------
+                if (request.snapshot && request.snapshot.agents) {
+                  this.logger.log("[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] snapshot agents ", request.snapshot.agents);
+                  request.agents = request['snapshot']["agents"]
+                } else {
+                  if (request.agents) {
+                    request.agents = request.agents
+                  }
+                }
+              });
+            }
+            return data;
+          })
+      );
+  }
+
+
 }
 
 

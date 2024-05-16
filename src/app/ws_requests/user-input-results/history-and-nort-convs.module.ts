@@ -12,8 +12,6 @@ import { MomentModule } from 'ngx-moment';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { HistoryComponent } from './history/view.component';
-import { UserInputResultsComponent } from './user-input-results/view.component';
 
 const routes: Routes = [
   { path: "", component: HistoryAndNortConvsComponent},
@@ -22,8 +20,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HistoryAndNortConvsComponent,
-    HistoryComponent,
-    UserInputResultsComponent
   ],
   imports: [
     RouterModule.forChild(routes),

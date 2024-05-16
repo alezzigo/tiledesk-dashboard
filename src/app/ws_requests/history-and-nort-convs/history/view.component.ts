@@ -1,31 +1,31 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
-import { Request } from '../../models/request-model';
+import { Request } from '../../../models/request-model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../../core/auth.service';
 // import { IMyDpOptions, IMyDateModel, IMyDate } from 'mydatepicker';
-import { DepartmentService } from '../../services/department.service';
+import { DepartmentService } from '../../../services/department.service';
 import { trigger, state, style, animate, transition, query, animateChild } from '@angular/animations';
-import { LocalDbService } from '../../services/users-local-db.service';
-import { BotLocalDbService } from '../../services/bot-local-db.service';
-import { UsersService } from '../../services/users.service';
-import { FaqKbService } from '../../services/faq-kb.service';
-import { APP_SUMO_PLAN_NAME, avatarPlaceholder, getColorBck, goToCDSVersion, PLAN_NAME } from '../../utils/util';
+import { LocalDbService } from '../../../services/users-local-db.service';
+import { BotLocalDbService } from '../../../services/bot-local-db.service';
+import { UsersService } from '../../../services/users.service';
+import { FaqKbService } from '../../../services/faq-kb.service';
+import { APP_SUMO_PLAN_NAME, avatarPlaceholder, getColorBck, goToCDSVersion, PLAN_NAME } from '../../../utils/util';
 import { Subscription } from 'rxjs';
-import { ProjectPlanService } from '../../services/project-plan.service';
+import { ProjectPlanService } from '../../../services/project-plan.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NotifyService } from '../../core/notify.service';
-import { AppConfigService } from '../../services/app-config.service';
+import { NotifyService } from '../../../core/notify.service';
+import { AppConfigService } from '../../../services/app-config.service';
 // import * as moment from 'moment';
 import moment from "moment";
-import { WsRequestsService } from '../../services/websocket/ws-requests.service';
+import { WsRequestsService } from '../../../services/websocket/ws-requests.service';
 import { UAParser } from 'ua-parser-js';
-import { WsSharedComponent } from '../../ws_requests/ws-shared/ws-shared.component';
+import { WsSharedComponent } from '../../../ws_requests/ws-shared/ws-shared.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators'
 import { Location } from '@angular/common';
-import { SelectOptionsTranslatePipe } from '../../selectOptionsTranslate.pipe';
-import { TagsService } from '../../services/tags.service';
-import { LoggerService } from '../../services/logger/logger.service';
+import { SelectOptionsTranslatePipe } from '../../../selectOptionsTranslate.pipe';
+import { TagsService } from '../../../services/tags.service';
+import { LoggerService } from '../../../services/logger/logger.service';
 import { ProjectService } from 'app/services/project.service';
 import { WsMsgsService } from 'app/services/websocket/ws-msgs.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -50,9 +50,9 @@ export const MY_DATE_FORMATS = {
 const swal = require('sweetalert');
 
 @Component({
-  selector: 'appdashboard-requests-list-history-new',
-  templateUrl: './history-and-nort-convs.component.html',
-  styleUrls: ['./history-and-nort-convs.component.scss'],
+  selector: 'appdashboard-requests-list-history',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.scss'],
   animations: [
     trigger('ngIfAnimation', [
       transition(':enter, :leave', [
@@ -84,7 +84,7 @@ const swal = require('sweetalert');
 })
 
 
-export class HistoryAndNortConvsComponent extends WsSharedComponent implements OnInit, OnDestroy {
+export class HistoryComponent extends WsSharedComponent implements OnInit, OnDestroy {
   PLAN_NAME = PLAN_NAME;
   APP_SUMO_PLAN_NAME = APP_SUMO_PLAN_NAME;
   private unsubscribe$: Subject<any> = new Subject<any>();
@@ -279,8 +279,6 @@ export class HistoryAndNortConvsComponent extends WsSharedComponent implements O
   appSumoProfile: string;
   appSumoProfilefeatureAvailableFromBPlan: string;
   botLogo: string;
-
-  selected: any;
   /**
    * 
    * @param router 
@@ -323,7 +321,6 @@ export class HistoryAndNortConvsComponent extends WsSharedComponent implements O
     public brandService: BrandService,
   ) {
     super(botLocalDbService, usersLocalDbService, router, wsRequestsService, faqKbService, usersService, notify, logger, translate);
-    this.selected = 'history';//-> default active component
     const brand = brandService.getBrand();
     this.botLogo = brand['BASE_LOGO_NO_TEXT']
   }
@@ -2876,12 +2873,6 @@ export class HistoryAndNortConvsComponent extends WsSharedComponent implements O
 
       }
     })
-  }
-
-  //go to different component passed throw arg of method
-  goTo(selected) {
-    this.selected = selected;
-    this.logger.log("[ANALYTICS] Move to:", selected);
   }
 
 }

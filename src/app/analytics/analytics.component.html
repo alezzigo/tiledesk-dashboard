@@ -21,14 +21,18 @@
         <a>{{ 'Analytics.RealTimeComponentTitle' | translate }}</a>
     </li>
     <!-- Moved to Metrics -->
-    <!-- 
-        <li class="btn-with-border-effect " [ngClass]="{'li-active' : selected === 'visitors', 'border-from-center': selected !== 'visitors'}" (click)="goTo('visitors')">
-            <a>{{ 'Analytics.VisitorsComponentTitle' | translate }}</a>
-        </li> 
-        <li class="bnt-with-border-effect " [ngClass]="{'li-active' : selected === 'messages', 'border-from-center': selected !== 'visitors'}" (click)="goTo('messages')">
-            <a>{{ 'Analytics.MessagesComponentTitle' | translate }}</a>
-        </li>
-        -->
+
+    <li class="btn-with-border-effect "
+        [ngClass]="{'li-active' : selected === 'visitors', 'border-from-center': selected !== 'visitors'}"
+        (click)="goTo('visitors')">
+        <a>{{ 'Analytics.VisitorsComponentTitle' | translate }}</a>
+    </li>
+    <li class="bnt-with-border-effect "
+        [ngClass]="{'li-active' : selected === 'messages', 'border-from-center': selected !== 'visitors'}"
+        (click)="goTo('messages')">
+        <a>{{ 'Analytics.MessagesComponentTitle' | translate }}</a>
+    </li>
+
 </ul>
 
 
