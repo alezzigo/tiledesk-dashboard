@@ -1476,7 +1476,7 @@ export class UserInputResultsComponent extends WsSharedComponent implements OnIn
 
         } else if (this.profile_name === 'free' || this.profile_name === 'Sandbox') {  // && this.trial_expired === true
           this.router.navigate(['project/' + this.projectId + '/pricing']);
-       
+
         }
 
       } else {
@@ -2392,7 +2392,7 @@ export class UserInputResultsComponent extends WsSharedComponent implements OnIn
     });
   }
 
-   // Export CSV
+  // Export CSV
   exportRequestsToCSV() {
     if (this.payIsVisible) {
       const isAvailable = this.checkPlanAndPresentModal()
@@ -2400,13 +2400,14 @@ export class UserInputResultsComponent extends WsSharedComponent implements OnIn
       if (isAvailable === false) {
         return
       }
-      this.wsRequestsService.downloadHistoryRequestsAsCsv(this.queryString, 0).subscribe((requests: any) => {
+      const exportRequests = this.requestList.filter(r => this.request_selected.includes(r.request_id));
+      const minimumRequests = exportRequests.map(r => ({ ...(r["userInput"] ?? {}) }))
+      this.wsRequestsService.exportCsvFile(minimumRequests).subscribe((requests: any) => {
         if (requests) {
           this.logger.log('[HISTORY & NORT-CONVS] - DOWNLOAD REQUESTS AS CSV - RES ', requests);
-
+          window.alert("Export user-input-results.csv completed!");
           // const reqNoLineBreaks = requests.replace(/(\r\n\t|\n|\r\t)/gm, ' ');
           // this.logger.log('!!! DOWNLOAD REQUESTS AS CSV - REQUESTS NO NEW LINE ', reqNoLineBreaks);
-          this.downloadFile(requests)
         }
       }, error => {
         this.logger.error('[HISTORY & NORT-CONVS] - DOWNLOAD REQUESTS AS CSV - ERROR: ', error);
@@ -2419,9 +2420,6 @@ export class UserInputResultsComponent extends WsSharedComponent implements OnIn
       this.notify._displayContactUsModal(true, 'upgrade_plan');
     }
   }
-
- 
- 
 
 
   presentModalAppSumoFeautureAvailableFromBPlan() {

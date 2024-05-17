@@ -6,14 +6,14 @@
 
 <ul class="bottom-nav-history">
   <li class="btn-with-border-effect "
-      [ngClass]="{'li-active' : selected === 'panoramica', 'border-from-center': selected !== 'panoramica'}"
+      [ngClass]="{'li-active' : selected === 'history', 'border-from-center': selected !== 'history'}"
       (click)="goTo('history')">
       <a>{{ 'Analytics.PanoramicaComponentTitle' | translate }}</a>
   </li>
   <li class="btn-with-border-effect "
-      [ngClass]="{'li-active' : selected === 'metriche', 'border-from-center': selected !== 'metriche'}"
+      [ngClass]="{'li-active' : selected === 'user-input-results', 'border-from-center': selected !== 'user-input-results'}"
       (click)="goTo('user-input-results')">
-      <a>{{ 'Analytics.MetricsComponentTitle' | translate }}</a>
+      <a>User Input Results</a>
   </li>
 </ul>
 

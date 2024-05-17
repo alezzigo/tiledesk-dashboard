@@ -52,7 +52,6 @@
                       <a class="custom-dropdown-a">{{ "VisitorsPage.ServedRequests" | translate }}</a>
                     </div>
                   </div>
-
                 </li>
 
                 <li (click)="requestsStatusSelect('100')">
@@ -608,8 +607,6 @@
                   </div>
                 </th>
 
-
-
                 <th *ngIf="!IS_HERE_FOR_HISTORY" class="table-header-option" style="text-align: center;">
                   <!-- ---------------------------------------------------------------------------------------- -->
                   <!-- Action archive selected if IS HERE FOR NO REAL TIME REQUESTS (!IS_HERE_FOR_HISTORY) -->
@@ -665,8 +662,6 @@
                 <!-- <th class="table-header-text"> </th> -->
                 <!-- <th class="table-header-text"> </th> -->
                 <!-- <th class="table-header-text"> </th> -->
-
-
                 <!-- ----------------------------- -->
                 <!-- Conversation count -->
                 <!-- ----------------------------- -->
@@ -752,12 +747,11 @@
 
 
                 <!-- ===== DEPARTMENT NAME ===== -->
-                <th class="table-header-text">
+                <!-- <th class="table-header-text">
                   <span class="column-th-span">
-                    <!-- {{ 'VisitorsPage.Department' | translate }} -->
                     {{ 'Department' | translate }}
                   </span>
-                </th>
+                </th> -->
 
                 <!--  ----------------------------- -->
                 <!--  SERVED BY  -->
@@ -766,6 +760,34 @@
                   <span class="column-th-span">
                     <!-- {{ 'HistoryPage.ServedBy' | translate }} -->
                     {{ 'ServedBy' | translate }}
+                  </span>
+                </th>
+
+                <!--  ----------------------------- -->
+                <!--  Fullname Input -->
+                <!--  ----------------------------- -->
+                <th class="table-header-text">
+                  <span class="column-th-span">
+                    {{ 'Fullname' | translate }}
+                  </span>
+                </th>
+
+                <!--  ----------------------------- -->
+                <!--  Phone Input -->
+                <!--  ----------------------------- -->
+                <th class="table-header-text">
+                  <span class="column-th-span">
+                    {{ 'Phone' | translate }}
+                  </span>
+                </th>
+
+
+                <!--  ----------------------------- -->
+                <!--  Picture Input -->
+                <!--  ----------------------------- -->
+                <th class="table-header-text">
+                  <span class="column-th-span">
+                    {{ 'Picture' | translate }}
                   </span>
                 </th>
 
@@ -1554,15 +1576,14 @@
                 </td>
 
                 <!-- ===== DEPARTMENT NAME ===== -->
-                <td>
+                <!-- <td>
                   <p *ngIf="request?.dept?.name" class="column-td">
-                    <!-- {{ request?.department?.name }} -->
                     {{ request?.dept?.name }}
                   </p>
                   <p *ngIf="!request?.dept?.name" class="column-td">
                     N/A
                   </p>
-                </td>
+                </td> -->
 
 
                 <!-- ------------------------------------------------------------------------------------------------------ -->
@@ -1834,6 +1855,32 @@
                   </div>
                 </td>
 
+
+                 <!-- ------ ====== Input User====== ------ -->
+                 <td>
+                  <p class="column-td">
+                    <span style="font-size: 11px;color: #7695a5;">
+                      {{ request?.userInput?.userFullname }}
+                    </span>
+                  </p>
+                </td>
+
+                <td>
+                  <p class="column-td">
+                    <span style="font-size: 11px;color: #7695a5;">
+                      {{ request?.userInput?.userPhone }}
+                    </span>
+                  </p>
+                </td>
+
+                <td>
+                  <p class="column-td" >
+                    <img class="user-img ws-requests-list-servedby-avatar" *ngIf="request?.userInput?.userPictureUrl?.includes('http')" [src]="request?.userInput?.userPictureUrl" />
+                    <span *ngIf="!request?.userInput?.userPictureUrl?.includes('http')" style="font-size: 11px;color: #7695a5;">
+                       - 
+                    </span>
+                  </p>
+                </td>
 
                 <!-- ===== RATING ===== -->
                 <!-- <td (click)='goToRequestMsgs(request?.request_id)' style="cursor:pointer" >

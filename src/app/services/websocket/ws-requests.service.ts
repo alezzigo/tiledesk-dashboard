@@ -1206,6 +1206,26 @@ export class WsRequestsService implements OnDestroy {
       .get(url, httpOptions)
   }
 
+
+  // ------------------------------------------------------
+  // @ Download history request as CSV
+  // ------------------------------------------------------
+  public exportCsvFile(querystring) {
+    const url = this.SERVER_BASE_PATH + this.project_id + '/requests/user-input-requests/csv';
+    this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - DOWNLOAD REQUESTS AS CSV URL ', url);
+    const body = JSON.stringify({ userInputRequests: querystring })
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.TOKEN,
+      }),
+      responseType: 'text' as 'json'
+
+    };
+    return this._httpClient
+      .post(url, body, httpOptions)
+  }
+
   // -------------------------------------------------------------
   // WS Requests NO-RT & HISTORY
   // -------------------------------------------------------------
@@ -1346,11 +1366,15 @@ export class WsRequestsService implements OnDestroy {
       _querystring = ''
     }
 
-    let url = this.SERVER_BASE_PATH + this.project_id + '/user-input-results?' + _querystring + 'page=' + pagenumber + '&no_populate=true&no_textscore=true';
+    let url = '';
     if (status !== 'all') {
-      url += '&status' + operator + status + _querystring;
-    }
+      url = this.SERVER_BASE_PATH + this.project_id + '/requests/user-input-results?status' + operator + status + _querystring + '&page=' + pagenumber + '&no_populate=true&no_textscore=true';
+      // console.log('url status != all ' ,url )
 
+    } else {
+      url = this.SERVER_BASE_PATH + this.project_id + '/requests/user-input-results?' + _querystring + 'page=' + pagenumber + '&no_populate=true&no_textscore=true';
+      // console.log('url status all ' ,url )
+    }
 
     this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - GET REQUESTS URL ', url);
 
