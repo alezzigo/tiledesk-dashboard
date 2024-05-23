@@ -13,7 +13,7 @@ export class OnboardingWelcomeComponent implements OnInit {
   constructor(
     private router: Router,
     public brandService: BrandService,
-  ) { 
+  ) {
     const brand = brandService.getBrand();
     this.company_name = brand['BRAND_NAME'];
     // console.log('[ON-BOARDING-WELCOME company_name]' , this.company_name)
@@ -26,6 +26,10 @@ export class OnboardingWelcomeComponent implements OnInit {
 
   goToOnboadingSteps() {
     this.router.navigate(['/create-new-project']);
+  }
+
+  goToDashboard() {
+    this.router.navigate(['/']);
   }
 
 }

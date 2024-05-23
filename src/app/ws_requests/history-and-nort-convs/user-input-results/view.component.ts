@@ -2400,8 +2400,9 @@ export class UserInputResultsComponent extends WsSharedComponent implements OnIn
       if (isAvailable === false) {
         return
       }
-      const exportRequests = this.requestList.filter(r => this.request_selected.includes(r.request_id));
-      const minimumRequests = exportRequests.map(r => ({ ...(r["userInput"] ?? {}) }))
+      const selectedRequests = this.requestList.filter(r => this.request_selected.includes(r.request_id));
+      console.log(selectedRequests)
+      const minimumRequests = selectedRequests.map(r => ({ ...(r["userInput"] ?? {}) }))
       this.wsRequestsService.exportCsvFile(minimumRequests).subscribe((requests: any) => {
         if (requests) {
           this.logger.log('[HISTORY & NORT-CONVS] - DOWNLOAD REQUESTS AS CSV - RES ', requests);

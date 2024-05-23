@@ -1210,10 +1210,10 @@ export class WsRequestsService implements OnDestroy {
   // ------------------------------------------------------
   // @ Download history request as CSV
   // ------------------------------------------------------
-  public exportCsvFile(querystring) {
+  public exportCsvFile(userInputRequests) {
     const url = this.SERVER_BASE_PATH + this.project_id + '/requests/user-input-requests/csv';
     this.logger.log('[WS-REQUESTS-SERV][HISTORY & NORT-CONVS] - DOWNLOAD REQUESTS AS CSV URL ', url);
-    const body = JSON.stringify({ userInputRequests: querystring })
+    const body = JSON.stringify({ userInputRequests: userInputRequests })
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
