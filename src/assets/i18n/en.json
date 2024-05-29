@@ -460,6 +460,7 @@
     "CreateAnswers": "Create answers",
     "CreateAFreeAccount": "Create a free account",
     "CreateTicket": "Create ticket",
+    "CreateDirectWhatsappMessage": "Create Whatsapp Message",
     "Ok": "Ok",
     "Subject": "Subject",
     "DefaultBotLanguageInDialogflow": "Default bot language in Dialogflow",
